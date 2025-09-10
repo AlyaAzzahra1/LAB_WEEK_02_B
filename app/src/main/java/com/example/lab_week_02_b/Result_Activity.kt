@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,14 +22,11 @@ class Result_Activity : AppCompatActivity() {
 
         if (intent != null) {
             val colorCode = intent.getStringExtra(COLOR_KEY)
-
             val backgroundScreen = findViewById<ConstraintLayout>(R.id.background_screen)
 
             try {
-                // ✅ coba ubah background sesuai kode warna
                 backgroundScreen.setBackgroundColor(Color.parseColor("#$colorCode"))
             } catch (ex: IllegalArgumentException) {
-                // ❌ kalau invalid, kirim balik error ke MainActivity
                 Intent().let { errorIntent ->
                     errorIntent.putExtra(ERROR_KEY, true)
                     setResult(Activity.RESULT_OK, errorIntent)
@@ -37,12 +35,15 @@ class Result_Activity : AppCompatActivity() {
                 return
             }
 
-            // ✅ kalau valid, tampilkan pesan hasil
             val resultMessage = findViewById<TextView>(R.id.color_code_result_message)
             resultMessage.text = getString(
                 R.string.color_code_result_message,
                 colorCode?.uppercase()
             )
+        }
+
+        findViewById<Button>(R.id.button_back).setOnClickListener {
+            finish() // kembali ke MainActivity
         }
     }
 }

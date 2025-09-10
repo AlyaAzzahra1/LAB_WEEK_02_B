@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     private val submitButton: Button
         get() = findViewById(R.id.submit_button)
 
-    // ✅ Listener untuk menerima hasil balik dari ResultActivity
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             val data = activityResult.data
@@ -50,7 +49,6 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     val resultIntent = Intent(this, Result_Activity::class.java)
                     resultIntent.putExtra(COLOR_KEY, colorCode)
-                    // ✅ ganti startActivity dengan startForResult.launch
                     startForResult.launch(resultIntent)
                 }
             } else {
